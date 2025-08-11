@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductsAPI.DTO;
@@ -12,7 +13,7 @@ public class ProductsController : ControllerBase
 {
     // private static List<Product>? _products;
     private readonly ProductsContext _context;
-
+    
     public ProductsController(ProductsContext context)
     {
         _context = context;
@@ -46,6 +47,8 @@ public class ProductsController : ControllerBase
     // http://localhost:5238/api/products/0
     // Product yerine IActionResult gönderirsek durum kodu da gönderme imkanımız olur.
     [HttpGet("{id}")]
+    // [Authorize(Roles = "Admin")]
+    [Authorize]
     public async Task<IActionResult> GetProduct(int? id)
     {
         if (id == null)
@@ -53,7 +56,7 @@ public class ProductsController : ControllerBase
             //return StatusCode(404); Aynı şey
             return NotFound();
         }
-        var product = await _context.Products.Select(p => MapProductDTO(p)).FirstOrDefaultAsync(i => i.ProductId == id);
+        var product = await _context.Products.Where(i => i.ProductId == id).Select(p => MapProductDTO(p)).FirstOrDefaultAsync();
         // var product = await _context.Products.FindAsync(id);  // sadece id kullanıldığı için soldaki sorgu kullanıldı var product = await _context.Products.FirstOrDefaultAsync(i => i.ProductId == id);
         // Product? product = _products?.FirstOrDefault(x => x.ProductId == id); // _products? ==> sonuna koyulan ? sayesinde FirstOrDefault _products eğer null değilse çalışır.
         if (product == null)
@@ -132,12 +135,16 @@ public class ProductsController : ControllerBase
 
     private static ProductDTO MapProductDTO(Product product)
     {
-        return new ProductDTO
+        var entity = new ProductDTO();
+
+        if (product != null)
         {
-            ProductId = product.ProductId,
-            ProductName = product.ProductName,
-            Price = product.Price,
-        };
+            entity.ProductId = product.ProductId;
+            entity.ProductName = product.ProductName;
+            entity.Price = product.Price;
+        }
+
+        return entity;
 
     }
 }

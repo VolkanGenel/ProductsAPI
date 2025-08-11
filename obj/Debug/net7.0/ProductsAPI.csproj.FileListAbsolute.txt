@@ -55,3 +55,4 @@
 /Users/sezaigenel/Desktop/aspdotnet/aspnetcore-dersleri-udemy/ProductsAPI/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/sezaigenel/Desktop/aspdotnet/aspnetcore-dersleri-udemy/ProductsAPI/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
 /Users/sezaigenel/Desktop/aspdotnet/aspnetcore-dersleri-udemy/ProductsAPI/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/sezaigenel/Desktop/aspdotnet/aspnetcore-dersleri-udemy/ProductsAPI/obj/Debug/net7.0/ProductsAPI.sourcelink.json
